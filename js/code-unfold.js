@@ -58,9 +58,9 @@ function addCodeWrap($node) {
   // 底部 "展开代码" 与 侧边栏 "收起代码"
   var $btn = $(`
     <div class="highlight-footer">
-      <a class="js_unfold_code_btn show-btn" href="javascript:;">展开代码<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+      <a class="js_unfold_code_btn show-btn" href="javascript:;">Expand Code<i class="fa fa-angle-down" aria-hidden="true"></i></a>
     </div>
-    <a class="js_retract_code_btn hide-btn" href="javascript:;"><i class="fa fa-angle-up" aria-hidden="true"></i>收起代码</a>
+    <a class="js_retract_code_btn hide-btn" href="javascript:;"><i class="fa fa-angle-up" aria-hidden="true"></i>Collapse Code</a>
   `);
 
   $container.append($btn);
