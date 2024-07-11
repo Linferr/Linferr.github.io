@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://linferr.github.io/ui.png">
 <meta property="og:image" content="http://linferr.github.io/renameui.png">
 <meta property="article:published_time" content="2024-07-11T07:33:15.000Z">
-<meta property="article:modified_time" content="2024-07-11T08:19:21.962Z">
+<meta property="article:modified_time" content="2024-07-11T09:33:54.374Z">
 <meta property="article:author" content="Linferr">
 <meta property="article:tag" content="Serial Port">
 <meta property="article:tag" content="Guide">
@@ -223,7 +223,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-07-11 15:33:15 / Modified: 16:19:21" itemprop="dateCreated datePublished" datetime="2024-07-11T15:33:15+08:00">2024-07-11</time>
+              <time title="Created: 2024-07-11 15:33:15 / Modified: 17:33:54" itemprop="dateCreated datePublished" datetime="2024-07-11T15:33:15+08:00">2024-07-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,7 +241,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>6.6k</span>
+              <span>6.7k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -280,9 +280,9 @@
 </ul>
 <p><img src="/ui.png" alt="Qt Serial Port UI"> </p>
 <p>Also, remember to rename these widgets to make coding easier later on.<br><img src="/renameui.png" alt="rename widget"></p>
-<h3 id="QSerialPort"><a href="#QSerialPort" class="headerlink" title="QSerialPort"></a>QSerialPort</h3><p>In Qt, the <code>QSerialPort</code> class is essential for serial communication. To use it, you need to add the following line to your <code>.pro</code> file:</p>
+<h3 id="QSerialPort"><a href="#QSerialPort" class="headerlink" title="QSerialPort"></a>QSerialPort</h3><h4 id="pro"><a href="#pro" class="headerlink" title=".pro"></a>.pro</h4><p>In Qt, the <code>QSerialPort</code> class is essential for serial communication. To use it, you need to add the following line to your <code>.pro</code> file:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QT       += serialport</span><br></pre></td></tr></table></figure>
-<p>Then, include the necessary headers in your source file:</p>
+<h4 id="Widget-h"><a href="#Widget-h" class="headerlink" title="Widget.h"></a>Widget.h</h4><p>Then, include the necessary headers in your source file:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QSerialPort&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QSerialPortInfo&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>Also, there are some common issues with the QSerialPort library:</p>
 <ol>
@@ -293,7 +293,7 @@
 <li><p>If you have previously installed Anaconda, it might have set an old Qt version in the PATH, causing conflicts with the current kit.</p>
 </li>
 </ol>
-<h3 id="Implementing-the-Logic"><a href="#Implementing-the-Logic" class="headerlink" title="Implementing the Logic"></a>Implementing the Logic</h3><p>Define the following slots in your class:</p>
+<h3 id="Implementing-the-Logic"><a href="#Implementing-the-Logic" class="headerlink" title="Implementing the Logic"></a>Implementing the Logic</h3><h4 id="Widget-cpp"><a href="#Widget-cpp" class="headerlink" title="Widget.cpp"></a>Widget.cpp</h4><p>Define the following slots in your class:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> slots:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">openButton_clicked</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">closeButton_clicked</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">sendButton_clicked</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">clearButton_clicked</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">serialPortReadyRead</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
 <p>Define the private members in your class:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Ui::Widget *ui; </span><br><span class="line">    QSerialPort *serialPort; </span><br></pre></td></tr></table></figure>
@@ -313,10 +313,10 @@
 <li>Get the serial port parameters from the ComboBox and set them to the QSerialPort object.</li>
 <li>Open the serial port, display a success message if successful, and an error message if failed.</li>
 </ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Widget::openButton_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    serialPort-&gt;<span class="built_in">setPortName</span>(ui-&gt;comBox-&gt;<span class="built_in">currentText</span>());</span><br><span class="line">    serialPort-&gt;<span class="built_in">setBaudRate</span>(ui-&gt;baudBox-&gt;<span class="built_in">currentText</span>().<span class="built_in">toInt</span>());</span><br><span class="line">    <span class="comment">// QSerialPort::DataBits is an enum type function in the QSerialPort namespace to ensure the validity of the data bits</span></span><br><span class="line">    serialPort-&gt;<span class="built_in">setDataBits</span>(QSerialPort::<span class="built_in">DataBits</span>(ui-&gt;dataBox-&gt;<span class="built_in">currentText</span>().<span class="built_in">toInt</span>()));</span><br><span class="line">    serialPort-&gt;<span class="built_in">setStopBits</span>(QSerialPort::<span class="built_in">StopBits</span>(ui-&gt;stopBox-&gt;<span class="built_in">currentText</span>().<span class="built_in">toInt</span>()));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ui-&gt;parityBox-&gt;<span class="built_in">currentText</span>() == <span class="string">&quot;None&quot;</span>) &#123;</span><br><span class="line">        serialPort-&gt;<span class="built_in">setParity</span>(QSerialPort::NoParity);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ui-&gt;parityBox-&gt;<span class="built_in">currentText</span>() == <span class="string">&quot;Even&quot;</span>) &#123;</span><br><span class="line">        serialPort-&gt;<span class="built_in">setParity</span>(QSerialPort::EvenParity);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (serialPort-&gt;<span class="built_in">open</span>(QIODevice::ReadWrite)) &#123;</span><br><span class="line">        QMessageBox::<span class="built_in">information</span>(<span class="keyword">this</span>, <span class="string">&quot;提示&quot;</span>, <span class="string">&quot;串口打开成功&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        QMessageBox::<span class="built_in">critical</span>(<span class="keyword">this</span>, <span class="string">&quot;提示&quot;</span>, <span class="string">&quot;串口打开失败&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Widget::openButton_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    serialPort-&gt;<span class="built_in">setPortName</span>(ui-&gt;comBox-&gt;<span class="built_in">currentText</span>());</span><br><span class="line">    serialPort-&gt;<span class="built_in">setBaudRate</span>(ui-&gt;baudBox-&gt;<span class="built_in">currentText</span>().<span class="built_in">toInt</span>());</span><br><span class="line">    <span class="comment">// QSerialPort::DataBits is an enum type function in the QSerialPort namespace to ensure the validity of the data bits</span></span><br><span class="line">    serialPort-&gt;<span class="built_in">setDataBits</span>(QSerialPort::<span class="built_in">DataBits</span>(ui-&gt;dataBox-&gt;<span class="built_in">currentText</span>().<span class="built_in">toInt</span>()));</span><br><span class="line">    serialPort-&gt;<span class="built_in">setStopBits</span>(QSerialPort::<span class="built_in">StopBits</span>(ui-&gt;stopBox-&gt;<span class="built_in">currentText</span>().<span class="built_in">toInt</span>()));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ui-&gt;parityBox-&gt;<span class="built_in">currentText</span>() == <span class="string">&quot;None&quot;</span>) &#123;</span><br><span class="line">        serialPort-&gt;<span class="built_in">setParity</span>(QSerialPort::NoParity);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ui-&gt;parityBox-&gt;<span class="built_in">currentText</span>() == <span class="string">&quot;Even&quot;</span>) &#123;</span><br><span class="line">        serialPort-&gt;<span class="built_in">setParity</span>(QSerialPort::EvenParity);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (serialPort-&gt;<span class="built_in">open</span>(QIODevice::ReadWrite)) &#123;</span><br><span class="line">        QMessageBox::<span class="built_in">information</span>(<span class="keyword">this</span>, <span class="string">&quot;Info&quot;</span>, <span class="string">&quot;Serial port opened&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        QMessageBox::<span class="built_in">critical</span>(<span class="keyword">this</span>, <span class="string">&quot;Info&quot;</span>, <span class="string">&quot;Failed to open serial port.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Close the serial port and display a message:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Widget::closeButton_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    serialPort-&gt;<span class="built_in">close</span>();</span><br><span class="line">    QMessageBox::<span class="built_in">information</span>(<span class="keyword">this</span>, <span class="string">&quot;提示&quot;</span>, <span class="string">&quot;串口已关闭&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Widget::closeButton_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    serialPort-&gt;<span class="built_in">close</span>();</span><br><span class="line">    QMessageBox::<span class="built_in">information</span>(<span class="keyword">this</span>, <span class="string">&quot;Info&quot;</span>, <span class="string">&quot;Serial port closed&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Send the data entered by the user through the serial port:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Widget::sendButton_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    serialPort-&gt;<span class="built_in">write</span>(ui-&gt;lineEdit-&gt;<span class="built_in">text</span>().<span class="built_in">toLocal8Bit</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -336,7 +336,7 @@
 <p>If there are any missing files or errors, you can use a tool called “DependenciesGui” to check. </p>
 <p>Common issues include missing DLLs like libstdc++-6.dll. Place these missing DLLs in the same directory as your executable.<br>Common missing DLLs:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">libstdc++-6.dll</span><br><span class="line">libgcc_s_seh-1.dll</span><br><span class="line">libwinpthread-1.dll</span><br></pre></td></tr></table></figure>
-<h3 id="Serial-Port-Detection-Issues-ESP8266"><a href="#Serial-Port-Detection-Issues-ESP8266" class="headerlink" title="Serial Port Detection Issues(ESP8266)"></a>Serial Port Detection Issues(ESP8266)</h3><p>When attempting to detect the serial port with the executable and PuTTY, neither could recognize the ESP8266. However, the Arduino IDE successfully uploads code and enables basic WiFi functionality. This ruled out serial port occupation (confirmed via regedit) and confirmed that NodeMCU can perform firmware flashing. The issue is likely due to the USB cable being used.</p>
+<h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><h3 id="Serial-Port-Detection-Issues-ESP8266"><a href="#Serial-Port-Detection-Issues-ESP8266" class="headerlink" title="Serial Port Detection Issues(ESP8266)"></a>Serial Port Detection Issues(ESP8266)</h3><p>When attempting to detect the serial port with the executable and PuTTY, neither could recognize the ESP8266. However, the Arduino IDE successfully uploads code and enables basic WiFi functionality. This ruled out serial port occupation (confirmed via regedit) and confirmed that NodeMCU can perform firmware flashing. The issue is likely due to the USB cable being used.</p>
 <p>Since both PuTTY and my executable use the serial port, a USB-to-Serial (TTL) adapter is likely needed. A standard USB-to-Type-C cable is insufficient. For testing, use either a USB-to-Serial (TTL) adapter or an Arduino board as an intermediary (this should work).</p>
 
     </div>
@@ -374,11 +374,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2024/07/10/hello-world/" rel="prev" title="Hello World">
-      <i class="fa fa-chevron-left"></i> Hello World
-    </a></div>
       <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/07/11/Qt-Upper-Computer-UDP/" rel="next" title="Qt Upper Computer UDP">
+      Qt Upper Computer UDP <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -437,7 +437,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Serial-Port"><span class="nav-number">1.</span> <span class="nav-text">Serial Port</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Project-Create-and-UI"><span class="nav-number">1.1.</span> <span class="nav-text">Project Create and UI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QSerialPort"><span class="nav-number">1.2.</span> <span class="nav-text">QSerialPort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implementing-the-Logic"><span class="nav-number">1.3.</span> <span class="nav-text">Implementing the Logic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executable-Generation-and-Running-on-Windows"><span class="nav-number">1.4.</span> <span class="nav-text">Executable Generation and Running on Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Serial-Port-Detection-Issues-ESP8266"><span class="nav-number">1.5.</span> <span class="nav-text">Serial Port Detection Issues(ESP8266)</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Serial-Port"><span class="nav-number">1.</span> <span class="nav-text">Serial Port</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Project-Create-and-UI"><span class="nav-number">1.1.</span> <span class="nav-text">Project Create and UI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QSerialPort"><span class="nav-number">1.2.</span> <span class="nav-text">QSerialPort</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pro"><span class="nav-number">1.2.1.</span> <span class="nav-text">.pro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Widget-h"><span class="nav-number">1.2.2.</span> <span class="nav-text">Widget.h</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implementing-the-Logic"><span class="nav-number">1.3.</span> <span class="nav-text">Implementing the Logic</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Widget-cpp"><span class="nav-number">1.3.1.</span> <span class="nav-text">Widget.cpp</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executable-Generation-and-Running-on-Windows"><span class="nav-number">1.4.</span> <span class="nav-text">Executable Generation and Running on Windows</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Testing"><span class="nav-number">2.</span> <span class="nav-text">Testing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Serial-Port-Detection-Issues-ESP8266"><span class="nav-number">2.1.</span> <span class="nav-text">Serial Port Detection Issues(ESP8266)</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -462,7 +462,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -503,13 +503,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">7k</span>
+    <span title="Symbols count total">14k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">6 mins.</span>
+    <span title="Reading time total">13 mins.</span>
 </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://lib.baomitu.com/canvas-nest.js/1.0.1/canvas-nest.js"></script>
 
         
