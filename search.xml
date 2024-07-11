@@ -18,4 +18,25 @@
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>Qt Upper Computer Serial Port</title>
+    <url>/2024/07/11/Qt-Upper-Computer-Serial-Port/</url>
+    <content><![CDATA[<h2 id="Serial-Port"><a href="#Serial-Port" class="headerlink" title="Serial Port"></a>Serial Port</h2><p>Recently, I’ve been learning how to develop an upper computer using Qt. Along the way, I’ve encountered numerous peculiar challenges and learned a great deal. I’ve decided to document these issues and their solutions in a series of articles. This serves as both a personal record for myself and as inspiration for others who may encounter similar hurdles.</p>
+<h3 id="Project-Create-and-UI"><a href="#Project-Create-and-UI" class="headerlink" title="Project Create and UI"></a>Project Create and UI</h3><p>Build a new Widget project in Qt creator()</p>
+<p>Qt Widgets Applicaiton<br>-&gt; project name(Qtsp)<br>-&gt; build system choose “qmake”<br>-&gt; base class let’s use a simple one “QWidget”<br>-&gt; keep next…</p>
+<p>Open the project we could see there is a file called widget.ui, which is very easy for use to use that to create a simple ui. (Of course we could write code in widget.cpp to create what we need, but this guide is for the beginner, so that is very easy)</p>
+<p>Here is the widget I created, include:<br>    Combobox,<br>    Label,<br>    PushButto,<br>    LineEdit,<br>    PlainTextEdit.</p>
+<p><img src="/Qt-Upper-Computer-Serial-Port/ui.png" alt="Qt Serial Port UI"><br><img src="/Qt-Upper-Computer-Serial-Port/renameui.png" alt="rename widget"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><h3 id="Create-a-new-post-1"><a href="#Create-a-new-post-1" class="headerlink" title="Create a new post"></a>Create a new post</h3><h3 id="Create-a-new-post-2"><a href="#Create-a-new-post-2" class="headerlink" title="Create a new post"></a>Create a new post</h3>]]></content>
+      <categories>
+        <category>Qt</category>
+      </categories>
+      <tags>
+        <tag>Serial Port</tag>
+        <tag>Guide</tag>
+        <tag>Tricky bugs</tag>
+      </tags>
+  </entry>
 </search>
