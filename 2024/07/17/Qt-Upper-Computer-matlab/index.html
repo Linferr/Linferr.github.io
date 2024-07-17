@@ -21,17 +21,26 @@
     var CONFIG = {"hostname":"linferr.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#FFA07A","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://linferr.github.io/categories/index.html">
+  <meta name="description" content="Qt Creator 调用matlab函数             本文主要实现利用Qt做一个调用matlab函数的上位机。Qt的UI界面比较简洁，只有两个函数input的输入口和一个send按钮。Matlab的函数主要效果是通过相位设计算法反射面的相位数据，并将这些数据转换为指定格式，然后通过 UDP 协议发送到指定的目标设备。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt-Upper-Computer-matlab">
+<meta property="og:url" content="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Qt Creator 调用matlab函数             本文主要实现利用Qt做一个调用matlab函数的上位机。Qt的UI界面比较简洁，只有两个函数input的输入口和一个send按钮。Matlab的函数主要效果是通过相位设计算法反射面的相位数据，并将这些数据转换为指定格式，然后通过 UDP 协议发送到指定的目标设备。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-07-16T05:10:07.000Z">
-<meta property="article:modified_time" content="2024-07-16T05:11:05.064Z">
+<meta property="og:image" content="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/mbuild.png">
+<meta property="og:image" content="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/deploytool.png">
+<meta property="og:image" content="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/package.png">
+<meta property="article:published_time" content="2024-07-17T06:13:56.000Z">
+<meta property="article:modified_time" content="2024-07-17T07:14:46.807Z">
 <meta property="article:author" content="Linferr">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Tricky bugs">
+<meta property="article:tag" content="matlab">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/mbuild.png">
 
-<link rel="canonical" href="http://linferr.github.io/categories/">
+<link rel="canonical" href="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/">
 
 
 <script id="page-configurations">
@@ -39,13 +48,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>categories | Hexo
-</title>
+  <title>Qt-Upper-Computer-matlab | Hexo</title>
   
 
 
@@ -186,51 +194,165 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="en">
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/image.jpg">
+      <meta itemprop="name" content="Linferr">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Qt-Upper-Computer-matlab
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">categories
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
 
-<div class="post-meta">
+              <time title="Created: 2024-07-17 14:13:56 / Modified: 15:14:46" itemprop="dateCreated datePublished" datetime="2024-07-17T14:13:56+08:00">2024-07-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Qt/" itemprop="url" rel="index"><span itemprop="name">Qt</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>903</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div class="note info no-icon">
+            <h2 id="Qt-Creator-调用matlab函数"><a href="#Qt-Creator-调用matlab函数" class="headerlink" title="Qt Creator 调用matlab函数"></a>Qt Creator 调用matlab函数</h2>
+          </div>
+
+<p>本文主要实现利用Qt做一个调用matlab函数的上位机。Qt的UI界面比较简洁，只有两个函数input的输入口和一个send按钮。<br>Matlab的函数主要效果是通过相位设计算法反射面的相位数据，并将这些数据转换为指定格式，然后通过 UDP 协议发送到指定的目标设备。</p>
+<span id="more"></span>
+<div class="note default">
+            <h3 id="Project-Create-and-UI"><a href="#Project-Create-and-UI" class="headerlink" title="Project Create and UI"></a>Project Create and UI</h3>
+          </div>
+
+<p>项目创建和UI设计本文不再赘述，详情可以参考我之前的文章。</p>
+<div class="note info no-icon">
+            <h2 id="Matlab部分打包"><a href="#Matlab部分打包" class="headerlink" title="Matlab部分打包"></a>Matlab部分打包</h2>
+          </div>
+<p>我将本文主要分成两个部分，一个是关于matlab函数的打包，另一个部分是关于Qt Creator的调用。首先我们来看matlab部分的函数打包过程；</p>
+<div class="note default">
+            <h3 id="Matlab函数实现效果"><a href="#Matlab函数实现效果" class="headerlink" title="Matlab函数实现效果"></a>Matlab函数实现效果</h3>
+          </div>
+<p>其实就Qt调用matlab函数这一功能而言，可以不是很需要关心matlab函数的效果，不过此处可以简单介绍下函数的效果。</p>
+<p>matlab函数具体功能包括：</p>
+<ol>
+<li>设置和初始化 UDP 通信参数。</li>
+<li>使用matlab的函数生成相位设计。</li>
+<li>将相位数据转换为十六进制字符串和字节数据。</li>
+<li>通过 UDP 端口将数据发送到目标设备。</li>
+</ol>
+<div class="note default">
+            <h3 id="Matlab函数打包"><a href="#Matlab函数打包" class="headerlink" title="Matlab函数打包"></a>Matlab函数打包</h3>
+          </div>
+
+
+<div class="tabs" id="steps"><ul class="nav-tabs"><li class="tab active"><a href="#steps-1">Steps 1</a></li><li class="tab"><a href="#steps-2">Steps 2</a></li><li class="tab"><a href="#steps-3">Steps 3</a></li></ul><div class="tab-content"><div class="tab-pane active" id="steps-1"><p>首先第一点，我们需要保证matlab部分的代码都是fuction函数而不是具体的脚本script。<br>接着我们在命令行输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mbuild -setup</span><br></pre></td></tr></table></figure>
+
+<p>他会出现如下内容：<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/mbuild.png" alt="mbuild -setup"><br>点击出现的选项” mex -setup C++ -client MBUILD “</p>
+<p>如果说你的matlab没有安装mingw64，按照提示安装即可。若是电脑以及安装但是matlab没有识别到，可以使用如下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setenv(<span class="string">&#x27;MW_MINGW64_LOC&#x27;</span>, <span class="string">&#x27;C:\mingw64&#x27;</span>) //<span class="string">&#x27;C:\mingw64&#x27;</span>换成你自己的路径</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="steps-2"><p>接着我们输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deploytool</span><br></pre></td></tr></table></figure>
+<p>等待弹出窗口，如下图，选择Library Compiler<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/deploytool.png" alt="deploytool"></p></div><div class="tab-pane" id="steps-3"><p>接着首先选择左上角C++ Shared Library，然后点击右侧加号，选择所需要的所有.m文件（第一个放进去的会是你打包的文件名字）。<br>如图所示，下面会显示生成的三个我们需要的文件：sendudp.dll, sendudp.lib，sendudp.h:<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/package.png" alt="package"></p></div></div></div>
+    </div>
+
+    
+    
+    
+    <!-- 结束语 -->
+    
+      <div style="text-align:center;color: #ccc;font-size:14px;">-------------That's a wrap <i class="fa fa-heart"></i> See u next time!-------------</div>
+
+    <script src="//sdk.jinrishici.com/v2/browser/jinrishici.js"></script>
+<script>
+  jinrishici.load((result) => {
+    let jrsc = document.getElementById('jrsc');
+    const data = result.data;
+    let author = data.origin.author;
+    let title = '《' + data.origin.title + '》';
+    let content = data.content.substr(0, data.content.length - 1);
+    let dynasty = data.origin.dynasty.substr(0, data.origin.dynasty.length - 1);
+    jrsc.innerText = content + ' @ ' + dynasty + '·' + author + title;
+  });
+</script>
+<div style="text-align: center"><span id="jrsc" >正在加载今日诗词....</span></div>
+
+
+
+      
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Guide/" rel="tag"># Guide</a>
+              <a href="/tags/Tricky-bugs/" rel="tag"># Tricky bugs</a>
+              <a href="/tags/matlab/" rel="tag"># matlab</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/07/11/Qt-Upper-Computer-UDP/" rel="prev" title="Qt Upper Computer UDP">
+      <i class="fa fa-chevron-left"></i> Qt Upper Computer UDP
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-          <div class="category-all-page">
-            <div class="category-all-title">
-              1 category in total
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Qt/">Qt</a><span class="category-list-count">3</span></li></ul>
-            </div>
-          </div>
-        
-      </div>
-      
-      
-      
-    </div>
-    
-
-    
-    
-    
 
 
           </div>
@@ -281,6 +403,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-Creator-%E8%B0%83%E7%94%A8matlab%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">Qt Creator 调用matlab函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Project-Create-and-UI"><span class="nav-number">1.1.</span> <span class="nav-text">Project Create and UI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Matlab%E9%83%A8%E5%88%86%E6%89%93%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">Matlab部分打包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Matlab%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E6%95%88%E6%9E%9C"><span class="nav-number">2.1.</span> <span class="nav-text">Matlab函数实现效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Matlab%E5%87%BD%E6%95%B0%E6%89%93%E5%8C%85"><span class="nav-number">2.2.</span> <span class="nav-text">Matlab函数打包</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

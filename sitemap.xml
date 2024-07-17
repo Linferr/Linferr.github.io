@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://linferr.github.io/2024/07/11/Qt-Upper-Computer-Serial-Port/</loc>
+    <loc>http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/</loc>
     
     <lastmod>2024-07-17</lastmod>
     
@@ -12,6 +12,15 @@
   
   <url>
     <loc>http://linferr.github.io/2024/07/11/Qt-Upper-Computer-UDP/</loc>
+    
+    <lastmod>2024-07-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://linferr.github.io/2024/07/11/Qt-Upper-Computer-Serial-Port/</loc>
     
     <lastmod>2024-07-17</lastmod>
     
@@ -47,7 +56,7 @@
 
   
   <url>
-    <loc>http://linferr.github.io/tags/UDP/</loc>
+    <loc>http://linferr.github.io/tags/Serial-Port/</loc>
     <lastmod>2024-07-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -68,7 +77,14 @@
   </url>
   
   <url>
-    <loc>http://linferr.github.io/tags/Serial-Port/</loc>
+    <loc>http://linferr.github.io/tags/UDP/</loc>
+    <lastmod>2024-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://linferr.github.io/tags/matlab/</loc>
     <lastmod>2024-07-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
