@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Qt Style Sheets(QSS)</title>
+    <url>/2024/07/18/Qt-Style-Sheets/</url>
+    <content><![CDATA[<div class="note primary">
+            <h4 id="本文内容参考"><a href="#本文内容参考" class="headerlink" title="本文内容参考"></a>本文内容参考</h4><p><a href="https://smartadpole.github.io/software/qt/qss/">「QT」界面美化</a><br><a href="https://blog.csdn.net/qq21497936/article/details/79401577"> QSS样式表笔记大全系列 </a></p>
+          </div>
+
+]]></content>
+      <categories>
+        <category>Qt</category>
+      </categories>
+      <tags>
+        <tag>QSS</tag>
+        <tag>Guide</tag>
+        <tag>Styling</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Qt Upper Computer Serial Port</title>
     <url>/2024/07/11/Qt-Upper-Computer-Serial-Port/</url>
     <content><![CDATA[<div class="note info no-icon">
@@ -116,8 +133,8 @@
         <category>Qt</category>
       </categories>
       <tags>
-        <tag>Serial Port</tag>
         <tag>Guide</tag>
+        <tag>Serial Port</tag>
         <tag>Tricky bugs</tag>
       </tags>
   </entry>
@@ -250,7 +267,7 @@ TextEdit: For sending and receiving messages
       </tags>
   </entry>
   <entry>
-    <title>Qt-Upper-Computer-matlab</title>
+    <title>Qt Upper Computer matlab</title>
     <url>/2024/07/17/Qt-Upper-Computer-matlab/</url>
     <content><![CDATA[<div class="note info no-icon">
             <h2 id="Qt-Creator-调用matlab函数"><a href="#Qt-Creator-调用matlab函数" class="headerlink" title="Qt Creator 调用matlab函数"></a>Qt Creator 调用matlab函数</h2>
