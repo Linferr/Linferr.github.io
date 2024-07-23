@@ -35,9 +35,9 @@
     <category term="Qt" scheme="http://linferr.github.io/categories/Qt/"/>
     
     
-    <category term="Guide" scheme="http://linferr.github.io/tags/Guide/"/>
-    
     <category term="QSS" scheme="http://linferr.github.io/tags/QSS/"/>
+    
+    <category term="Guide" scheme="http://linferr.github.io/tags/Guide/"/>
     
     <category term="Styling" scheme="http://linferr.github.io/tags/Styling/"/>
     
@@ -95,9 +95,9 @@
     
     <category term="Guide" scheme="http://linferr.github.io/tags/Guide/"/>
     
-    <category term="Tricky bugs" scheme="http://linferr.github.io/tags/Tricky-bugs/"/>
-    
     <category term="UDP" scheme="http://linferr.github.io/tags/UDP/"/>
+    
+    <category term="Tricky bugs" scheme="http://linferr.github.io/tags/Tricky-bugs/"/>
     
   </entry>
   
@@ -122,11 +122,11 @@
     <category term="Qt" scheme="http://linferr.github.io/categories/Qt/"/>
     
     
-    <category term="Serial Port" scheme="http://linferr.github.io/tags/Serial-Port/"/>
-    
     <category term="Guide" scheme="http://linferr.github.io/tags/Guide/"/>
     
     <category term="Tricky bugs" scheme="http://linferr.github.io/tags/Tricky-bugs/"/>
+    
+    <category term="Serial Port" scheme="http://linferr.github.io/tags/Serial-Port/"/>
     
   </entry>
   
