@@ -7,7 +7,7 @@
             <h4 id="本文内容参考"><a href="#本文内容参考" class="headerlink" title="本文内容参考"></a>本文内容参考</h4><p><a href="https://smartadpole.github.io/software/qt/qss/">「QT」界面美化</a><br><a href="https://blog.csdn.net/qq21497936/article/details/79401577"> QSS样式表笔记大全系列 </a></p>
           </div>
 
-]]></content>
+<span id="more"></span>]]></content>
       <categories>
         <category>Qt</category>
       </categories>
@@ -139,6 +139,126 @@
       </tags>
   </entry>
   <entry>
+    <title>Qt Upper Computer matlab</title>
+    <url>/2024/07/17/Qt-Upper-Computer-matlab/</url>
+    <content><![CDATA[<div class="note info no-icon">
+            <h2 id="Qt-Creator-调用matlab函数"><a href="#Qt-Creator-调用matlab函数" class="headerlink" title="Qt Creator 调用matlab函数"></a>Qt Creator 调用matlab函数</h2>
+          </div>
+
+<p>本文主要实现利用Qt做一个调用matlab函数的上位机。Qt的UI界面比较简洁，只有两个函数input的输入口和一个send按钮。<br>Matlab的函数主要效果是通过相位设计算法反射面的相位数据，并将这些数据转换为指定格式，然后通过 UDP 协议发送到指定的目标设备。</p>
+<span id="more"></span>
+<div class="note default">
+            <h3 id="Project-Create-and-UI"><a href="#Project-Create-and-UI" class="headerlink" title="Project Create and UI"></a>Project Create and UI</h3>
+          </div>
+
+<p>项目创建和UI设计本文不再赘述，详情可以参考我之前的文章。</p>
+<div class="note info no-icon">
+            <h2 id="Matlab部分打包"><a href="#Matlab部分打包" class="headerlink" title="Matlab部分打包"></a>Matlab部分打包</h2>
+          </div>
+<p>我将本文主要分成两个部分，一个是关于matlab函数的打包，另一个部分是关于Qt Creator的调用。首先我们来看matlab部分的函数打包过程；</p>
+<div class="note default">
+            <h3 id="Matlab函数实现效果"><a href="#Matlab函数实现效果" class="headerlink" title="Matlab函数实现效果"></a>Matlab函数实现效果</h3>
+          </div>
+<p>其实就Qt调用matlab函数这一功能而言，可以不是很需要关心matlab函数的效果，不过此处可以简单介绍下函数的效果。</p>
+<p>matlab函数具体功能包括：</p>
+<ol>
+<li>设置和初始化 UDP 通信参数。</li>
+<li>使用matlab的函数生成相位设计。</li>
+<li>将相位数据转换为十六进制字符串和字节数据。</li>
+<li>通过 UDP 端口将数据发送到目标设备。</li>
+</ol>
+<div class="note default">
+            <h3 id="Matlab函数打包"><a href="#Matlab函数打包" class="headerlink" title="Matlab函数打包"></a>Matlab函数打包</h3>
+          </div>
+
+
+<div class="tabs" id="step"><ul class="nav-tabs"><li class="tab active"><a href="#step-1">Step 1</a></li><li class="tab"><a href="#step-2">Step 2</a></li><li class="tab"><a href="#step-3">Step 3</a></li></ul><div class="tab-content"><div class="tab-pane active" id="step-1"><p>首先第一点，我们需要保证matlab部分的代码都是fuction函数而不是具体的脚本script。<br>接着我们在命令行输入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mbuild -setup</span><br></pre></td></tr></table></figure>
+
+<p>他会出现如下内容：<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/mbuild.png" alt="mbuild -setup"><br>点击出现的选项” mex -setup C++ -client MBUILD “</p>
+<p>如果说你的matlab没有安装mingw64，按照提示安装即可。若是电脑以及安装但是matlab没有识别到，可以使用如下指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setenv(<span class="string">&#x27;MW_MINGW64_LOC&#x27;</span>, <span class="string">&#x27;C:\mingw64&#x27;</span>) //<span class="string">&#x27;C:\mingw64&#x27;</span>换成你自己的路径</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="step-2"><p>接着我们输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deploytool</span><br></pre></td></tr></table></figure>
+<p>等待弹出窗口，如下图，选择Library Compiler<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/deploytool.png" alt="deploytool"></p></div><div class="tab-pane" id="step-3"><p>接着首先选择左上角C++ Shared Library，然后点击右侧加号，选择所需要的所有.m文件（第一个放进去的会是你打包的文件名字）。<br>如图所示，下面会显示生成的三个我们需要的文件：sendudp.dll, sendudp.lib，sendudp.h:<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/package.png" alt="package"></p></div></div></div>
+
+<div class="note info no-icon">
+            <h2 id="Qt-Creator调用"><a href="#Qt-Creator调用" class="headerlink" title="Qt Creator调用"></a>Qt Creator调用</h2>
+          </div>
+<p>这一部分我简单分成了两块，第一块涉及一些文件创建和路径配置，第二部分是具体函数调用。</p>
+<div class="note default">
+            <h3 id="路径配置"><a href="#路径配置" class="headerlink" title="路径配置"></a>路径配置</h3>
+          </div>
+
+
+<div class="tabs" id="section"><ul class="nav-tabs"><li class="tab active"><a href="#section-1">Section 1</a></li><li class="tab"><a href="#section-2">Section 2</a></li></ul><div class="tab-content"><div class="tab-pane active" id="section-1"><div class="note ">
+            <p><strong>基本文件放置</strong></p>
+          </div>
+
+<p>我们主要用到的文件有”sendudp.dll”, “sendudp.lib”，”sendudp.h”<br>首先，我们在Qt的工程文件夹下创建 lib和 include文件夹:</p>
+<ol>
+<li>将”sendudp.dll”, “sendudp.lib”放到lib文件夹下，</li>
+<li>将”sendudp.h”放到include文件夹下。</li>
+</ol></div><div class="tab-pane" id="section-2"><div class="note ">
+            <p><strong>.pro文件路径配置</strong></p>
+          </div>
+在.pro文件中，我们增加如下代码：
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"># 配置包含路径,有空格用quote</span><br><span class="line">INCLUDEPATH += $$<span class="built_in">quote</span>(C:/Program Files/MATLAB/R2022b/<span class="keyword">extern</span>/include)</span><br><span class="line"></span><br><span class="line"># 配置库路径</span><br><span class="line">LIBS += -L$$<span class="built_in">quote</span>(C:/Program Files/MATLAB/R2022b/<span class="keyword">extern</span>/lib/win64/microsoft) -lmclmcr -lmclmcrrt -llibmx</span><br><span class="line"></span><br><span class="line"># Qt项目中创建的库和头文件路径(将sendudp改成你的matlab打包文件名)</span><br><span class="line">win32: LIBS += -L$$PWD/lib/ -lsendudp</span><br><span class="line"></span><br><span class="line">INCLUDEPATH += $$PWD/include</span><br><span class="line">DEPENDPATH += $$PWD/include</span><br></pre></td></tr></table></figure></div></div></div>
+
+<div class="note default">
+            <h3 id="路径配置"><a href="#路径配置" class="headerlink" title="路径配置"></a>路径配置</h3>
+          </div>
+
+<h4 id="widget-h"><a href="#widget-h" class="headerlink" title="widget.h"></a>widget.h</h4><p>在widget.h中加上所需要的槽函数：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> slots:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">send_clicked</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="widget-cpp"><a href="#widget-cpp" class="headerlink" title="widget.cpp"></a>widget.cpp</h4><p>首先增加引用的头文件：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;sendudp.h&quot;</span></span></span><br></pre></td></tr></table></figure>
+<p>在初始化部分，除了connect signal and slot，还需要初始化MATLAB 编译的库</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Widget::<span class="built_in">Widget</span>(QWidget *parent)</span><br><span class="line">    : <span class="built_in">QWidget</span>(parent)</span><br><span class="line">    , <span class="built_in">ui</span>(<span class="keyword">new</span> Ui::Widget)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;<span class="built_in">setupUi</span>(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">connect</span>(ui-&gt;send, &amp;QPushButton::clicked, <span class="keyword">this</span>, &amp;Widget::send_clicked);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">mclInitializeApplication</span>(<span class="literal">nullptr</span>, <span class="number">0</span>)) &#123;</span><br><span class="line">        <span class="built_in">qFatal</span>(<span class="string">&quot;Could not initialize the application properly.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">sendudpInitialize</span>()) &#123;</span><br><span class="line">        <span class="built_in">qFatal</span>(<span class="string">&quot;Could not initialize the library properly.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同样的方式添加上终止函数：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Widget::~<span class="built_in">Widget</span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">delete</span> ui;</span><br><span class="line">    <span class="built_in">sendudpTerminate</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>编写我们需要的槽函数：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Widget::send_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 获取用户输入的参数</span></span><br><span class="line">    <span class="type">double</span> fair = ui-&gt;fai-&gt;<span class="built_in">text</span>().<span class="built_in">toDouble</span>();</span><br><span class="line">    <span class="comment">//double thetar = ui-&gt;theta-&gt;text().toDouble();</span></span><br><span class="line">    QString thetaStr = ui-&gt;theta-&gt;<span class="built_in">text</span>();</span><br><span class="line"></span><br><span class="line">    <span class="type">double</span> thetar = <span class="built_in">convertInput</span>(thetaStr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出调试信息，检查输入值</span></span><br><span class="line">    <span class="comment">//qDebug() &lt;&lt; &quot;fair:&quot; &lt;&lt; fair;</span></span><br><span class="line">    <span class="comment">//qDebug() &lt;&lt; &quot;thetar:&quot; &lt;&lt; thetar;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将参数传递给 MATLAB 函数</span></span><br><span class="line">    <span class="function">mwArray <span class="title">fair_mw</span><span class="params">(fair)</span></span>;</span><br><span class="line">    <span class="function">mwArray <span class="title">thetar_mw</span><span class="params">(thetar)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用 MATLAB 编译的 DLL 函数</span></span><br><span class="line">    <span class="built_in">sendudp</span>(fair_mw, thetar_mw);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可能到这里有人会好奇，为什么这么引用matlab的函数，mwArray是什么，convertInput()又是啥。<br>接下来我们一个一个看：</p>
+<div class="tabs" id="widget.cpp实现"><ul class="nav-tabs"><li class="tab active"><a href="#widget.cpp实现-1">widget.cpp实现 1</a></li><li class="tab"><a href="#widget.cpp实现-2">widget.cpp实现 2</a></li></ul><div class="tab-content"><div class="tab-pane active" id="widget.cpp实现-1"><div class="note ">
+            <p><strong>mwArray是什么</strong><br>首先我们打开sendudp.h，在最后几行我们可以看到这个头文件定义的三个函数：</p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">extern</span> LIB_sendudp_CPP_API <span class="type">void</span> MW_CALL_CONV <span class="title">bitsconvert</span><span class="params">(<span class="type">int</span> nargout, mwArray&amp; phase_converted, mwArray&amp; code, <span class="type">const</span> mwArray&amp; phase, <span class="type">const</span> mwArray&amp; bits)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> LIB_sendudp_CPP_API <span class="type">void</span> MW_CALL_CONV <span class="title">phaseDesign</span><span class="params">(<span class="type">int</span> nargout, mwArray&amp; phase, <span class="type">const</span> mwArray&amp; fair, <span class="type">const</span> mwArray&amp; thetar, <span class="type">const</span> mwArray&amp; M, <span class="type">const</span> mwArray&amp; N, <span class="type">const</span> mwArray&amp; dx, <span class="type">const</span> mwArray&amp; dy, <span class="type">const</span> mwArray&amp; lambda)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> LIB_sendudp_CPP_API <span class="type">void</span> MW_CALL_CONV <span class="title">sendudp</span><span class="params">(<span class="type">const</span> mwArray&amp; fair, <span class="type">const</span> mwArray&amp; thetar)</span></span>;</span><br></pre></td></tr></table></figure><ol><li>matlab一共打包了三个函数，前两个都是辅助函数，最重要的是最后一个sendudp(),他是我们需要调用的函数本体。</li><li>观察这个函数我们可以得知，他需要两个参数作为输入，分别是mwArray格式的fair和thetar。</li><li>mwArray 是 MATLAB Compiler SDK 提供的一个数据类型，用于在 C++ 中表示和操作 MATLAB 数据。</li></ol><p>小结：<br>sendudp 是一个 MATLAB 编译的 DLL 函数，期望接收 mwArray 类型的参数。将用户输入的数据转换为 mwArray 并传递给它，完成特定的计算或操作。</p>
+          </div></div><div class="tab-pane" id="widget.cpp实现-2"><div class="note ">
+            <p><strong>convertInput()是什么</strong></p>
+          </div>
+
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">ui-&gt;fai-&gt;<span class="built_in">text</span>().<span class="built_in">toDouble</span>();</span><br><span class="line">ui-&gt;theta-&gt;<span class="built_in">text</span>(); </span><br></pre></td></tr></table></figure>
+<p>这两个是用于从用户界面的 QLineEdit 控件中获取用户输入的文本。 toDouble() 方法将字符串转换为 double 类型。<br>由于用户可能会输入诸如 pi&#x2F;6 这样的数学表达式，直接将字符串转换为 double 类型是不行的。这里我想通过 convertInput 函数将字符串解析为 double 类型。<br>代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QDebug&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QRegularExpression&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QJSEngine&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">convertInput</span><span class="params">(<span class="type">const</span> QString&amp; input)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">const</span> QRegularExpression <span class="title">piRegex</span><span class="params">(<span class="string">&quot;\\bpi\\b&quot;</span>)</span></span>; <span class="comment">//匹配完整的单词 &quot;pi&quot;。 \\b 表示单词边界，确保只有单独的 &quot;pi&quot; 会被匹配，而不是诸如 &quot;piano&quot; 中的 &quot;pi&quot;。</span></span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">const</span> QRegularExpression <span class="title">eRegex</span><span class="params">(<span class="string">&quot;\\be\\b&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    QString processedInput = input;</span><br><span class="line">    processedInput.<span class="built_in">replace</span>(piRegex, <span class="string">&quot;3.141592653589793&quot;</span>); <span class="comment">//或者是180</span></span><br><span class="line">    processedInput.<span class="built_in">replace</span>(eRegex, <span class="string">&quot;2.718281828459045&quot;</span>);  <span class="comment">//将字符串中的 &quot;pi&quot; 和 &quot;e&quot; 替换为其数学常数值。</span></span><br><span class="line"></span><br><span class="line">    QJSEngine engine;                                     <span class="comment">// 创建一个 JavaScript 引擎实例，用于评估数学表达式。</span></span><br><span class="line">    QJSValue result = engine.<span class="built_in">evaluate</span>(processedInput);    <span class="comment">// 评估处理后的字符串，得到计算结果。 QJSEngine 可以解析和计算简单的数学表达式。</span></span><br><span class="line">    <span class="keyword">if</span> (result.<span class="built_in">isNumber</span>()) &#123;</span><br><span class="line">        <span class="keyword">return</span> result.<span class="built_in">toNumber</span>();                         <span class="comment">// 如果评估结果是数字，则返回其数值。</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">qWarning</span>() &lt;&lt; <span class="string">&quot;Invalid input: &quot;</span> &lt;&lt; input;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.0</span>;                                       <span class="comment">// 如果评估结果不是数字，输出警告信息并返回默认值 0.0。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是说，如果用户在 QLineEdit 输入了 “pi&#x2F;6”，该函数会将 “pi” 替换为 “3.141592653589793”，然后使用 QJSEngine 评估 “3.141592653589793&#x2F;6”，最终返回结果 0.5235987755982988。</p></div></div></div>
+
+<div class="note info no-icon">
+            <h2 id="exe文件界面优化"><a href="#exe文件界面优化" class="headerlink" title="exe文件界面优化"></a>exe文件界面优化</h2>
+          </div>
+
+<div class="note default">
+            <h3 id="如何更改左上角程序名称"><a href="#如何更改左上角程序名称" class="headerlink" title="如何更改左上角程序名称"></a>如何更改左上角程序名称</h3>
+          </div>
+<p>只需要在main函数里面添加  w.setWindowTitle(“your name”)即可</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line">    MainWindow w;</span><br><span class="line">    <span class="comment">//设置exe程序名</span></span><br><span class="line">    w.<span class="built_in">setWindowTitle</span>(<span class="string">&quot;HelloWorld&quot;</span>);</span><br><span class="line">    w.<span class="built_in">show</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> a.<span class="built_in">exec</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note default">
+            <h3 id="修改图标"><a href="#修改图标" class="headerlink" title="修改图标"></a>修改图标</h3>
+          </div>
+<p>在.pro文件中增加如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">RC_ICONS = icon.ico <span class="comment">// icon.ico是你的ico文件，需要放到项目源代码目录下</span></span><br></pre></td></tr></table></figure>
+
+<p>最后效果图如下：<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/exe.png" alt="HelloWorld.exe"></p>
+]]></content>
+      <categories>
+        <category>Qt</category>
+      </categories>
+      <tags>
+        <tag>Guide</tag>
+        <tag>Tricky bugs</tag>
+        <tag>matlab</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Qt Upper Computer UDP</title>
     <url>/2024/07/11/Qt-Upper-Computer-UDP/</url>
     <content><![CDATA[<div class="note info no-icon">
@@ -264,126 +384,6 @@ TextEdit: For sending and receiving messages
         <tag>Guide</tag>
         <tag>Tricky bugs</tag>
         <tag>UDP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Qt Upper Computer matlab</title>
-    <url>/2024/07/17/Qt-Upper-Computer-matlab/</url>
-    <content><![CDATA[<div class="note info no-icon">
-            <h2 id="Qt-Creator-调用matlab函数"><a href="#Qt-Creator-调用matlab函数" class="headerlink" title="Qt Creator 调用matlab函数"></a>Qt Creator 调用matlab函数</h2>
-          </div>
-
-<p>本文主要实现利用Qt做一个调用matlab函数的上位机。Qt的UI界面比较简洁，只有两个函数input的输入口和一个send按钮。<br>Matlab的函数主要效果是通过相位设计算法反射面的相位数据，并将这些数据转换为指定格式，然后通过 UDP 协议发送到指定的目标设备。</p>
-<span id="more"></span>
-<div class="note default">
-            <h3 id="Project-Create-and-UI"><a href="#Project-Create-and-UI" class="headerlink" title="Project Create and UI"></a>Project Create and UI</h3>
-          </div>
-
-<p>项目创建和UI设计本文不再赘述，详情可以参考我之前的文章。</p>
-<div class="note info no-icon">
-            <h2 id="Matlab部分打包"><a href="#Matlab部分打包" class="headerlink" title="Matlab部分打包"></a>Matlab部分打包</h2>
-          </div>
-<p>我将本文主要分成两个部分，一个是关于matlab函数的打包，另一个部分是关于Qt Creator的调用。首先我们来看matlab部分的函数打包过程；</p>
-<div class="note default">
-            <h3 id="Matlab函数实现效果"><a href="#Matlab函数实现效果" class="headerlink" title="Matlab函数实现效果"></a>Matlab函数实现效果</h3>
-          </div>
-<p>其实就Qt调用matlab函数这一功能而言，可以不是很需要关心matlab函数的效果，不过此处可以简单介绍下函数的效果。</p>
-<p>matlab函数具体功能包括：</p>
-<ol>
-<li>设置和初始化 UDP 通信参数。</li>
-<li>使用matlab的函数生成相位设计。</li>
-<li>将相位数据转换为十六进制字符串和字节数据。</li>
-<li>通过 UDP 端口将数据发送到目标设备。</li>
-</ol>
-<div class="note default">
-            <h3 id="Matlab函数打包"><a href="#Matlab函数打包" class="headerlink" title="Matlab函数打包"></a>Matlab函数打包</h3>
-          </div>
-
-
-<div class="tabs" id="step"><ul class="nav-tabs"><li class="tab active"><a href="#step-1">Step 1</a></li><li class="tab"><a href="#step-2">Step 2</a></li><li class="tab"><a href="#step-3">Step 3</a></li></ul><div class="tab-content"><div class="tab-pane active" id="step-1"><p>首先第一点，我们需要保证matlab部分的代码都是fuction函数而不是具体的脚本script。<br>接着我们在命令行输入：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mbuild -setup</span><br></pre></td></tr></table></figure>
-
-<p>他会出现如下内容：<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/mbuild.png" alt="mbuild -setup"><br>点击出现的选项” mex -setup C++ -client MBUILD “</p>
-<p>如果说你的matlab没有安装mingw64，按照提示安装即可。若是电脑以及安装但是matlab没有识别到，可以使用如下指令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setenv(<span class="string">&#x27;MW_MINGW64_LOC&#x27;</span>, <span class="string">&#x27;C:\mingw64&#x27;</span>) //<span class="string">&#x27;C:\mingw64&#x27;</span>换成你自己的路径</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="step-2"><p>接着我们输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deploytool</span><br></pre></td></tr></table></figure>
-<p>等待弹出窗口，如下图，选择Library Compiler<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/deploytool.png" alt="deploytool"></p></div><div class="tab-pane" id="step-3"><p>接着首先选择左上角C++ Shared Library，然后点击右侧加号，选择所需要的所有.m文件（第一个放进去的会是你打包的文件名字）。<br>如图所示，下面会显示生成的三个我们需要的文件：sendudp.dll, sendudp.lib，sendudp.h:<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/package.png" alt="package"></p></div></div></div>
-
-<div class="note info no-icon">
-            <h2 id="Qt-Creator调用"><a href="#Qt-Creator调用" class="headerlink" title="Qt Creator调用"></a>Qt Creator调用</h2>
-          </div>
-<p>这一部分我简单分成了两块，第一块涉及一些文件创建和路径配置，第二部分是具体函数调用。</p>
-<div class="note default">
-            <h3 id="路径配置"><a href="#路径配置" class="headerlink" title="路径配置"></a>路径配置</h3>
-          </div>
-
-
-<div class="tabs" id="section"><ul class="nav-tabs"><li class="tab active"><a href="#section-1">Section 1</a></li><li class="tab"><a href="#section-2">Section 2</a></li></ul><div class="tab-content"><div class="tab-pane active" id="section-1"><div class="note ">
-            <p><strong>基本文件放置</strong></p>
-          </div>
-
-<p>我们主要用到的文件有”sendudp.dll”, “sendudp.lib”，”sendudp.h”<br>首先，我们在Qt的工程文件夹下创建 lib和 include文件夹:</p>
-<ol>
-<li>将”sendudp.dll”, “sendudp.lib”放到lib文件夹下，</li>
-<li>将”sendudp.h”放到include文件夹下。</li>
-</ol></div><div class="tab-pane" id="section-2"><div class="note ">
-            <p><strong>.pro文件路径配置</strong></p>
-          </div>
-在.pro文件中，我们增加如下代码：
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"># 配置包含路径,有空格用quote</span><br><span class="line">INCLUDEPATH += $$<span class="built_in">quote</span>(C:/Program Files/MATLAB/R2022b/<span class="keyword">extern</span>/include)</span><br><span class="line"></span><br><span class="line"># 配置库路径</span><br><span class="line">LIBS += -L$$<span class="built_in">quote</span>(C:/Program Files/MATLAB/R2022b/<span class="keyword">extern</span>/lib/win64/microsoft) -lmclmcr -lmclmcrrt -llibmx</span><br><span class="line"></span><br><span class="line"># Qt项目中创建的库和头文件路径(将sendudp改成你的matlab打包文件名)</span><br><span class="line">win32: LIBS += -L$$PWD/lib/ -lsendudp</span><br><span class="line"></span><br><span class="line">INCLUDEPATH += $$PWD/include</span><br><span class="line">DEPENDPATH += $$PWD/include</span><br></pre></td></tr></table></figure></div></div></div>
-
-<div class="note default">
-            <h3 id="路径配置"><a href="#路径配置" class="headerlink" title="路径配置"></a>路径配置</h3>
-          </div>
-
-<h4 id="widget-h"><a href="#widget-h" class="headerlink" title="widget.h"></a>widget.h</h4><p>在widget.h中加上所需要的槽函数：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> slots:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">send_clicked</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-
-<h4 id="widget-cpp"><a href="#widget-cpp" class="headerlink" title="widget.cpp"></a>widget.cpp</h4><p>首先增加引用的头文件：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;sendudp.h&quot;</span></span></span><br></pre></td></tr></table></figure>
-<p>在初始化部分，除了connect signal and slot，还需要初始化MATLAB 编译的库</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Widget::<span class="built_in">Widget</span>(QWidget *parent)</span><br><span class="line">    : <span class="built_in">QWidget</span>(parent)</span><br><span class="line">    , <span class="built_in">ui</span>(<span class="keyword">new</span> Ui::Widget)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;<span class="built_in">setupUi</span>(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">connect</span>(ui-&gt;send, &amp;QPushButton::clicked, <span class="keyword">this</span>, &amp;Widget::send_clicked);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">mclInitializeApplication</span>(<span class="literal">nullptr</span>, <span class="number">0</span>)) &#123;</span><br><span class="line">        <span class="built_in">qFatal</span>(<span class="string">&quot;Could not initialize the application properly.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">sendudpInitialize</span>()) &#123;</span><br><span class="line">        <span class="built_in">qFatal</span>(<span class="string">&quot;Could not initialize the library properly.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>同样的方式添加上终止函数：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Widget::~<span class="built_in">Widget</span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">delete</span> ui;</span><br><span class="line">    <span class="built_in">sendudpTerminate</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>编写我们需要的槽函数：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Widget::send_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 获取用户输入的参数</span></span><br><span class="line">    <span class="type">double</span> fair = ui-&gt;fai-&gt;<span class="built_in">text</span>().<span class="built_in">toDouble</span>();</span><br><span class="line">    <span class="comment">//double thetar = ui-&gt;theta-&gt;text().toDouble();</span></span><br><span class="line">    QString thetaStr = ui-&gt;theta-&gt;<span class="built_in">text</span>();</span><br><span class="line"></span><br><span class="line">    <span class="type">double</span> thetar = <span class="built_in">convertInput</span>(thetaStr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出调试信息，检查输入值</span></span><br><span class="line">    <span class="comment">//qDebug() &lt;&lt; &quot;fair:&quot; &lt;&lt; fair;</span></span><br><span class="line">    <span class="comment">//qDebug() &lt;&lt; &quot;thetar:&quot; &lt;&lt; thetar;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将参数传递给 MATLAB 函数</span></span><br><span class="line">    <span class="function">mwArray <span class="title">fair_mw</span><span class="params">(fair)</span></span>;</span><br><span class="line">    <span class="function">mwArray <span class="title">thetar_mw</span><span class="params">(thetar)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用 MATLAB 编译的 DLL 函数</span></span><br><span class="line">    <span class="built_in">sendudp</span>(fair_mw, thetar_mw);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可能到这里有人会好奇，为什么这么引用matlab的函数，mwArray是什么，convertInput()又是啥。<br>接下来我们一个一个看：</p>
-<div class="tabs" id="widget.cpp实现"><ul class="nav-tabs"><li class="tab active"><a href="#widget.cpp实现-1">widget.cpp实现 1</a></li><li class="tab"><a href="#widget.cpp实现-2">widget.cpp实现 2</a></li></ul><div class="tab-content"><div class="tab-pane active" id="widget.cpp实现-1"><div class="note ">
-            <p><strong>mwArray是什么</strong><br>首先我们打开sendudp.h，在最后几行我们可以看到这个头文件定义的三个函数：</p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">extern</span> LIB_sendudp_CPP_API <span class="type">void</span> MW_CALL_CONV <span class="title">bitsconvert</span><span class="params">(<span class="type">int</span> nargout, mwArray&amp; phase_converted, mwArray&amp; code, <span class="type">const</span> mwArray&amp; phase, <span class="type">const</span> mwArray&amp; bits)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> LIB_sendudp_CPP_API <span class="type">void</span> MW_CALL_CONV <span class="title">phaseDesign</span><span class="params">(<span class="type">int</span> nargout, mwArray&amp; phase, <span class="type">const</span> mwArray&amp; fair, <span class="type">const</span> mwArray&amp; thetar, <span class="type">const</span> mwArray&amp; M, <span class="type">const</span> mwArray&amp; N, <span class="type">const</span> mwArray&amp; dx, <span class="type">const</span> mwArray&amp; dy, <span class="type">const</span> mwArray&amp; lambda)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> LIB_sendudp_CPP_API <span class="type">void</span> MW_CALL_CONV <span class="title">sendudp</span><span class="params">(<span class="type">const</span> mwArray&amp; fair, <span class="type">const</span> mwArray&amp; thetar)</span></span>;</span><br></pre></td></tr></table></figure><ol><li>matlab一共打包了三个函数，前两个都是辅助函数，最重要的是最后一个sendudp(),他是我们需要调用的函数本体。</li><li>观察这个函数我们可以得知，他需要两个参数作为输入，分别是mwArray格式的fair和thetar。</li><li>mwArray 是 MATLAB Compiler SDK 提供的一个数据类型，用于在 C++ 中表示和操作 MATLAB 数据。</li></ol><p>小结：<br>sendudp 是一个 MATLAB 编译的 DLL 函数，期望接收 mwArray 类型的参数。将用户输入的数据转换为 mwArray 并传递给它，完成特定的计算或操作。</p>
-          </div></div><div class="tab-pane" id="widget.cpp实现-2"><div class="note ">
-            <p><strong>convertInput()是什么</strong></p>
-          </div>
-
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">ui-&gt;fai-&gt;<span class="built_in">text</span>().<span class="built_in">toDouble</span>();</span><br><span class="line">ui-&gt;theta-&gt;<span class="built_in">text</span>(); </span><br></pre></td></tr></table></figure>
-<p>这两个是用于从用户界面的 QLineEdit 控件中获取用户输入的文本。 toDouble() 方法将字符串转换为 double 类型。<br>由于用户可能会输入诸如 pi&#x2F;6 这样的数学表达式，直接将字符串转换为 double 类型是不行的。这里我想通过 convertInput 函数将字符串解析为 double 类型。<br>代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QDebug&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QRegularExpression&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QJSEngine&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">convertInput</span><span class="params">(<span class="type">const</span> QString&amp; input)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">const</span> QRegularExpression <span class="title">piRegex</span><span class="params">(<span class="string">&quot;\\bpi\\b&quot;</span>)</span></span>; <span class="comment">//匹配完整的单词 &quot;pi&quot;。 \\b 表示单词边界，确保只有单独的 &quot;pi&quot; 会被匹配，而不是诸如 &quot;piano&quot; 中的 &quot;pi&quot;。</span></span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">const</span> QRegularExpression <span class="title">eRegex</span><span class="params">(<span class="string">&quot;\\be\\b&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    QString processedInput = input;</span><br><span class="line">    processedInput.<span class="built_in">replace</span>(piRegex, <span class="string">&quot;3.141592653589793&quot;</span>); <span class="comment">//或者是180</span></span><br><span class="line">    processedInput.<span class="built_in">replace</span>(eRegex, <span class="string">&quot;2.718281828459045&quot;</span>);  <span class="comment">//将字符串中的 &quot;pi&quot; 和 &quot;e&quot; 替换为其数学常数值。</span></span><br><span class="line"></span><br><span class="line">    QJSEngine engine;                                     <span class="comment">// 创建一个 JavaScript 引擎实例，用于评估数学表达式。</span></span><br><span class="line">    QJSValue result = engine.<span class="built_in">evaluate</span>(processedInput);    <span class="comment">// 评估处理后的字符串，得到计算结果。 QJSEngine 可以解析和计算简单的数学表达式。</span></span><br><span class="line">    <span class="keyword">if</span> (result.<span class="built_in">isNumber</span>()) &#123;</span><br><span class="line">        <span class="keyword">return</span> result.<span class="built_in">toNumber</span>();                         <span class="comment">// 如果评估结果是数字，则返回其数值。</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">qWarning</span>() &lt;&lt; <span class="string">&quot;Invalid input: &quot;</span> &lt;&lt; input;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.0</span>;                                       <span class="comment">// 如果评估结果不是数字，输出警告信息并返回默认值 0.0。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也就是说，如果用户在 QLineEdit 输入了 “pi&#x2F;6”，该函数会将 “pi” 替换为 “3.141592653589793”，然后使用 QJSEngine 评估 “3.141592653589793&#x2F;6”，最终返回结果 0.5235987755982988。</p></div></div></div>
-
-<div class="note info no-icon">
-            <h2 id="exe文件界面优化"><a href="#exe文件界面优化" class="headerlink" title="exe文件界面优化"></a>exe文件界面优化</h2>
-          </div>
-
-<div class="note default">
-            <h3 id="如何更改左上角程序名称"><a href="#如何更改左上角程序名称" class="headerlink" title="如何更改左上角程序名称"></a>如何更改左上角程序名称</h3>
-          </div>
-<p>只需要在main函数里面添加  w.setWindowTitle(“your name”)即可</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line">    MainWindow w;</span><br><span class="line">    <span class="comment">//设置exe程序名</span></span><br><span class="line">    w.<span class="built_in">setWindowTitle</span>(<span class="string">&quot;HelloWorld&quot;</span>);</span><br><span class="line">    w.<span class="built_in">show</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> a.<span class="built_in">exec</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<div class="note default">
-            <h3 id="修改图标"><a href="#修改图标" class="headerlink" title="修改图标"></a>修改图标</h3>
-          </div>
-<p>在.pro文件中增加如下代码：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">RC_ICONS = icon.ico <span class="comment">// icon.ico是你的ico文件，需要放到项目源代码目录下</span></span><br></pre></td></tr></table></figure>
-
-<p>最后效果图如下：<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/exe.png" alt="HelloWorld.exe"></p>
-]]></content>
-      <categories>
-        <category>Qt</category>
-      </categories>
-      <tags>
-        <tag>Guide</tag>
-        <tag>Tricky bugs</tag>
-        <tag>matlab</tag>
       </tags>
   </entry>
 </search>
