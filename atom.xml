@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>Linferr</title>
   
   
   <link href="http://linferr.github.io/atom.xml" rel="self"/>
@@ -35,9 +35,9 @@
     <category term="Qt" scheme="http://linferr.github.io/categories/Qt/"/>
     
     
-    <category term="QSS" scheme="http://linferr.github.io/tags/QSS/"/>
-    
     <category term="Guide" scheme="http://linferr.github.io/tags/Guide/"/>
+    
+    <category term="QSS" scheme="http://linferr.github.io/tags/QSS/"/>
     
     <category term="Styling" scheme="http://linferr.github.io/tags/Styling/"/>
     
@@ -122,9 +122,9 @@
     <category term="Qt" scheme="http://linferr.github.io/categories/Qt/"/>
     
     
-    <category term="Guide" scheme="http://linferr.github.io/tags/Guide/"/>
-    
     <category term="Serial Port" scheme="http://linferr.github.io/tags/Serial-Port/"/>
+    
+    <category term="Guide" scheme="http://linferr.github.io/tags/Guide/"/>
     
     <category term="Tricky bugs" scheme="http://linferr.github.io/tags/Tricky-bugs/"/>
     
