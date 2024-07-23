@@ -24,14 +24,14 @@
   <meta name="description" content="Qt Creator 调用matlab函数             本文主要实现利用Qt做一个调用matlab函数的上位机。Qt的UI界面比较简洁，只有两个函数input的输入口和一个send按钮。Matlab的函数主要效果是通过相位设计算法反射面的相位数据，并将这些数据转换为指定格式，然后通过 UDP 协议发送到指定的目标设备。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Qt Upper Computer matlab">
-<meta property="og:url" content="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/index.html">
+<meta property="og:url" content="http://linferr.github.io/Qt-Upper-Computer-matlab/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Qt Creator 调用matlab函数             本文主要实现利用Qt做一个调用matlab函数的上位机。Qt的UI界面比较简洁，只有两个函数input的输入口和一个send按钮。Matlab的函数主要效果是通过相位设计算法反射面的相位数据，并将这些数据转换为指定格式，然后通过 UDP 协议发送到指定的目标设备。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/mbuild.png">
-<meta property="og:image" content="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/deploytool.png">
-<meta property="og:image" content="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/package.png">
-<meta property="og:image" content="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/exe.png">
+<meta property="og:image" content="http://linferr.github.io/Qt-Upper-Computer-matlab/mbuild.png">
+<meta property="og:image" content="http://linferr.github.io/Qt-Upper-Computer-matlab/deploytool.png">
+<meta property="og:image" content="http://linferr.github.io/Qt-Upper-Computer-matlab/package.png">
+<meta property="og:image" content="http://linferr.github.io/Qt-Upper-Computer-matlab/exe.png">
 <meta property="article:published_time" content="2024-07-17T06:13:56.000Z">
 <meta property="article:modified_time" content="2024-07-18T06:27:57.854Z">
 <meta property="article:author" content="Linferr">
@@ -39,9 +39,9 @@
 <meta property="article:tag" content="Tricky bugs">
 <meta property="article:tag" content="matlab">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/mbuild.png">
+<meta name="twitter:image" content="http://linferr.github.io/Qt-Upper-Computer-matlab/mbuild.png">
 
-<link rel="canonical" href="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/">
+<link rel="canonical" href="http://linferr.github.io/Qt-Upper-Computer-matlab/">
 
 
 <script id="page-configurations">
@@ -203,7 +203,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://linferr.github.io/2024/07/17/Qt-Upper-Computer-matlab/">
+    <link itemprop="mainEntityOfPage" href="http://linferr.github.io/Qt-Upper-Computer-matlab/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/image.jpg">
@@ -304,11 +304,11 @@
 <div class="tabs" id="step"><ul class="nav-tabs"><li class="tab active"><a href="#step-1">Step 1</a></li><li class="tab"><a href="#step-2">Step 2</a></li><li class="tab"><a href="#step-3">Step 3</a></li></ul><div class="tab-content"><div class="tab-pane active" id="step-1"><p>首先第一点，我们需要保证matlab部分的代码都是fuction函数而不是具体的脚本script。<br>接着我们在命令行输入：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mbuild -setup</span><br></pre></td></tr></table></figure>
 
-<p>他会出现如下内容：<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/mbuild.png" alt="mbuild -setup"><br>点击出现的选项” mex -setup C++ -client MBUILD “</p>
+<p>他会出现如下内容：<br><img src="/Qt-Upper-Computer-matlab/mbuild.png" alt="mbuild -setup"><br>点击出现的选项” mex -setup C++ -client MBUILD “</p>
 <p>如果说你的matlab没有安装mingw64，按照提示安装即可。若是电脑以及安装但是matlab没有识别到，可以使用如下指令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setenv(<span class="string">&#x27;MW_MINGW64_LOC&#x27;</span>, <span class="string">&#x27;C:\mingw64&#x27;</span>) //<span class="string">&#x27;C:\mingw64&#x27;</span>换成你自己的路径</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="step-2"><p>接着我们输入</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deploytool</span><br></pre></td></tr></table></figure>
-<p>等待弹出窗口，如下图，选择Library Compiler<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/deploytool.png" alt="deploytool"></p></div><div class="tab-pane" id="step-3"><p>接着首先选择左上角C++ Shared Library，然后点击右侧加号，选择所需要的所有.m文件（第一个放进去的会是你打包的文件名字）。<br>如图所示，下面会显示生成的三个我们需要的文件：sendudp.dll, sendudp.lib，sendudp.h:<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/package.png" alt="package"></p></div></div></div>
+<p>等待弹出窗口，如下图，选择Library Compiler<br><img src="/Qt-Upper-Computer-matlab/deploytool.png" alt="deploytool"></p></div><div class="tab-pane" id="step-3"><p>接着首先选择左上角C++ Shared Library，然后点击右侧加号，选择所需要的所有.m文件（第一个放进去的会是你打包的文件名字）。<br>如图所示，下面会显示生成的三个我们需要的文件：sendudp.dll, sendudp.lib，sendudp.h:<br><img src="/Qt-Upper-Computer-matlab/package.png" alt="package"></p></div></div></div>
 
 <div class="note info no-icon">
             <h2 id="Qt-Creator调用"><a href="#Qt-Creator调用" class="headerlink" title="Qt Creator调用"></a>Qt Creator调用</h2>
@@ -376,7 +376,7 @@
 <p>在.pro文件中增加如下代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RC_ICONS = icon.ico <span class="comment">// icon.ico是你的ico文件，需要放到项目源代码目录下</span></span><br></pre></td></tr></table></figure>
 
-<p>最后效果图如下：<br><img src="/2024/07/17/Qt-Upper-Computer-matlab/exe.png" alt="HelloWorld.exe"></p>
+<p>最后效果图如下：<br><img src="/Qt-Upper-Computer-matlab/exe.png" alt="HelloWorld.exe"></p>
 
     </div>
 
@@ -417,11 +417,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/07/11/Qt-Upper-Computer-UDP/" rel="prev" title="Qt Upper Computer UDP">
+    <a href="/Qt-Upper-Computer-UDP/" rel="prev" title="Qt Upper Computer UDP">
       <i class="fa fa-chevron-left"></i> Qt Upper Computer UDP
     </a></div>
       <div class="post-nav-item">
-    <a href="/2024/07/18/Qt-Style-Sheets/" rel="next" title="Qt Style Sheets(QSS)">
+    <a href="/Qt-Style-Sheets/" rel="next" title="Qt Style Sheets(QSS)">
       Qt Style Sheets(QSS) <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
