@@ -95,9 +95,9 @@
     
     <category term="Guide" scheme="http://linferr.github.io/tags/Guide/"/>
     
-    <category term="UDP" scheme="http://linferr.github.io/tags/UDP/"/>
-    
     <category term="Tricky bugs" scheme="http://linferr.github.io/tags/Tricky-bugs/"/>
+    
+    <category term="UDP" scheme="http://linferr.github.io/tags/UDP/"/>
     
   </entry>
   
@@ -124,9 +124,9 @@
     
     <category term="Guide" scheme="http://linferr.github.io/tags/Guide/"/>
     
-    <category term="Tricky bugs" scheme="http://linferr.github.io/tags/Tricky-bugs/"/>
-    
     <category term="Serial Port" scheme="http://linferr.github.io/tags/Serial-Port/"/>
+    
+    <category term="Tricky bugs" scheme="http://linferr.github.io/tags/Tricky-bugs/"/>
     
   </entry>
   
